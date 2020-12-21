@@ -1,24 +1,29 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { addFavorite, removeFavorite } from '../../actions/userActions'
 import { StarBorder, Star } from '@material-ui/icons'
+import { number } from 'prop-types'
 
 export const CardButton = ({ pokeId }) => {
-  const user = useSelector(state => state.token)
+  const dispatch = useDispatch()
+  const favorites = useSelector(state => state.token.favorites)
   const addFav = () => {
-    addFavorite(pokeId,user._id)
+    dispatch(addFavorite(pokeId, favorites))
   }
 
   const removeFav = () => {
-    removeFavorite(pokeId,user._id)
+    dispatch(removeFavorite(pokeId, favorites))
   }
   const renderContent = () => {
-    switch (user.favorites.indexOf(pokeId)) {
+    switch (favorites.indexOf(pokeId)) {
       case -1:
-        return <StarBorder onClick={addFav}>Add Favorite</StarBorder>
+        return <StarBorder onClick={addFav} className={'poiner'}>Add Favorite</StarBorder>
       default:
-        return <Star onClick={removeFav}>Remove</Star>
+        return <Star onClick={removeFav} className={'poiner'}>Remove</Star>
     }
   }
   return (renderContent())
+}
+CardButton.propTypes = {
+  pokeId: number
 }

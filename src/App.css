@@ -9,3 +9,6 @@ a {
     justify-content: flex-end;
     padding: 5px;
 }
+.poiner{
+    cursor: pointer
+}

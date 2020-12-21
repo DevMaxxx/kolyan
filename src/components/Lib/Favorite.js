@@ -4,18 +4,21 @@ import { getPokemon } from '../../actions/getPoke'
 import { useSelector } from 'react-redux'
 
 const Favorite = () => {
-  const favorites = useSelector(state => state.token.favorites)
+  const token = useSelector(state => state.token)
   const [a, setA] = useState([])
 
   useEffect(() => {
     fetchFavoritesPokemons()
-  }, [favorites])
+  }, [token])
 
   const fetchFavoritesPokemons = async () => {
-    console.log(favorites)
-    const getPokemonsInfoPromises = favorites.map(getPokemon)
-    const pokemonsInfo = await Promise.all(getPokemonsInfoPromises)
-    setA(pokemonsInfo)
+    if (token) {
+      const getPokemonsInfoPromises = token.favorites.map(getPokemon)
+      const pokemonsInfo = await Promise.all(getPokemonsInfoPromises)
+      setA(pokemonsInfo)
+    } else {
+      setA([])
+    }
   }
   return <Table pokemons={a} display={false}/>
 }

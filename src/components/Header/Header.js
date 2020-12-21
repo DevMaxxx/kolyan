@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyles()
-  const isAuth = useSelector(state => state.token)
+  const isAuth = Boolean(useSelector(state => state.token))
   console.log(isAuth)
   const renderContent = () => {
     switch (isAuth) {
